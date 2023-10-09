@@ -1,7 +1,7 @@
 {
   "name": "unplugin-blog-manager",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "packageManager": "pnpm@8.6.12",
   "description": "A plugin to help you manage and organize your blog.",
   "license": "MIT",
