@@ -5,6 +5,10 @@ import Unplugin from '../src/vite'
 export default defineConfig({
   plugins: [
     Inspect(),
-    Unplugin(),
+    Unplugin({
+      author: 'jic999',
+      targetDir: './posts',
+      excludes: ['index.md'],
+    }),
   ],
 })

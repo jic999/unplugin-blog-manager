@@ -10,13 +10,10 @@ export interface ModuleOptions extends Options {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-unplugin-starter',
-    configKey: 'unpluginStarter',
+    name: 'nuxt-unplugin-blog-manager',
+    configKey: 'unpluginBlogManager',
   },
-  defaults: {
-    // ...default options
-  },
-  setup(options, nuxt) {
+  setup(options, _nuxt) {
     addVitePlugin(() => vite(options))
     addWebpackPlugin(() => webpack(options))
 
