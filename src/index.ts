@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 import type { UnpluginFactory } from 'unplugin'
@@ -10,6 +11,7 @@ export const unpluginFactory: UnpluginFactory<Options> = (options) => {
   const targetDir = options.targetDir
   const excludes = options.excludes || []
 
+  const targetDirname = targetDir.split(path.sep).pop()!
   const articleFiles = readDir(targetDir, excludes)
   const md = new MarkdownIt()
 
@@ -37,8 +39,12 @@ export const unpluginFactory: UnpluginFactory<Options> = (options) => {
             break
         }
       }
+
       // - path
-      const path = articleFile.substring(articleFile.lastIndexOf(`${targetDir}/`)).replace(/\.md$/, '')
+      const path = articleFile
+        .substring(articleFile.lastIndexOf(targetDirname))
+        .replaceAll('\\', '/')
+        .replace(/\.md$/, '')
       // - readingTime
       const readingTime = Math.ceil(tokens.length / 30)
       return {

@@ -1,3 +1,4 @@
+import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 import Unplugin from 'unplugin-blog-manager/vite'
@@ -7,7 +8,7 @@ export default defineConfig({
     Inspect(),
     Unplugin({
       author: 'jic999(only test)',
-      targetDir: './posts',
+      targetDir: resolve(__dirname, './posts'),
       excludes: ['index.md'],
     }),
   ],
