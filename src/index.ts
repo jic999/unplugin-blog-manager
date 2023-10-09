@@ -10,7 +10,6 @@ import { categorizePosts, formatDate, isNormalParagraph } from './utils'
 export const unpluginFactory: UnpluginFactory<Options> = (options) => {
   const targetDir = options.targetDir
   const excludes = options.excludes || []
-
   const readDir = (dirPath: string) => {
     const list: string[] = []
     const files = fs.readdirSync(dirPath)
@@ -63,13 +62,13 @@ export const unpluginFactory: UnpluginFactory<Options> = (options) => {
   return {
     name: 'unplugin-blog-manager',
     resolveId(source) {
-      if (source === 'unplugin-blog-manager/blogs')
+      if (source === 'unplugin-blog-manager/data')
         return source
       return null
     },
     load(id) {
-      if (id === 'unplugin-blog-manager/blogs')
-        return `export default ${JSON.stringify(postData)}`
+      if (id === 'unplugin-blog-manager/data')
+        return `export const data = ${JSON.stringify(postData)}`
       return null
     },
   }
