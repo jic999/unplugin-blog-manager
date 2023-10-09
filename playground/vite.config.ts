@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     Inspect(),
     Unplugin({
-      author: 'jic999',
+      author: 'jic999(only test)',
       targetDir: './posts',
       excludes: ['index.md'],
     }),

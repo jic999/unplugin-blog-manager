@@ -1,42 +1,32 @@
 import fs from 'node:fs'
-import path from 'node:path'
 import matter from 'gray-matter'
 import MarkdownIt from 'markdown-it'
 import type { UnpluginFactory } from 'unplugin'
 import { createUnplugin } from 'unplugin'
 import type { Options, Post } from './types'
-import { categorizePosts, formatDate, isNormalParagraph } from './utils'
+import { categorizePosts, formatDate, isNormalParagraph, readDir } from './logic'
 
 export const unpluginFactory: UnpluginFactory<Options> = (options) => {
   const targetDir = options.targetDir
   const excludes = options.excludes || []
-  const readDir = (dirPath: string) => {
-    const list: string[] = []
-    const files = fs.readdirSync(dirPath)
-    files.forEach((file) => {
-      const filePath = path.join(dirPath, file)
-      const stats = fs.statSync(filePath)
-      if (stats.isDirectory())
-        list.push(...readDir(filePath))
-      else if (
-        stats.isFile()
-      && filePath.endsWith('.md')
-      && !excludes.includes(filePath)
-      )
-        list.push(filePath)
-    })
-    return list
-  }
-  const articleFiles = readDir(targetDir)
+
+  const articleFiles = readDir(targetDir, excludes)
+  const md = new MarkdownIt()
 
   const posts = articleFiles
     .map((articleFile) => {
+      // get article content
       const articleContent = fs.readFileSync(articleFile, 'utf-8')
+      // get front matter
       let { data, excerpt } = matter(articleContent, { excerpt: true })
-      // 计算阅读时间
-      const md = new MarkdownIt()
+      // get md
       const tokens = md.parse(articleContent, {})
-      // 若无摘录 excerpt，则自动生成
+
+      // - author
+      const author = options.author
+      // - date & timestamp
+      const times = formatDate(data.date)
+      // - excerpt
       if (!excerpt) {
         excerpt = ''
         const filterTokens = tokens.filter(item => item.children?.length === 1)
@@ -47,17 +37,22 @@ export const unpluginFactory: UnpluginFactory<Options> = (options) => {
             break
         }
       }
+      // - path
+      const path = articleFile.substring(articleFile.lastIndexOf(`${targetDir}/`)).replace(/\.md$/, '')
+      // - readingTime
+      const readingTime = Math.ceil(tokens.length / 30)
       return {
-        author: options.author,
+        author,
         ...data,
-        date: formatDate(data.date),
+        date: times.date,
+        timestamp: times.timestamp,
         excerpt,
-        path: articleFile.substring(articleFile.lastIndexOf('/posts/')).replace(/\.md$/, ''),
-        readingTime: Math.ceil(tokens.length / 30),
+        path,
+        readingTime,
       } as Post
     })
-    .sort((a, b) => b.date.time - a.date.time)
-  const postData = categorizePosts(posts)
+    .sort((a, b) => b.timestamp - a.timestamp)
+  const postData = categorizePosts(posts, targetDir)
 
   return {
     name: 'unplugin-blog-manager',

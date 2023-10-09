@@ -6,15 +6,21 @@ export interface Options {
 
 export interface Post {
   title: string
+  /**
+   * first: front matter
+   * second: options.author
+   */
   author: string
+  /**
+   * first: front matter
+   * second: first paragraph or previous normal paragraph
+   */
+  excerpt?: string
   url: string
   path: string
   content: string
-  date: {
-    time: number
-    string: string
-  }
-  excerpt?: string
+  date: string
+  timestamp: number
   banner?: string
   tags?: string[]
   dir?: string
