@@ -6,15 +6,15 @@ A plugin that helps you manage and organize blog posts, based on [unplugin](http
 
 Just these, it seems that a plugin is not needed to complete. Indeed, I mainly want to learn how to develop an unplugin plugin, so there is *unplugin-blog-manager*😊.
 
-## 安装
+## Install
 
 ```bash
 npm i unplugin-blog-manager -D
 ```
 
-## 使用
+## Usage
 
-以 vite 为例：
+take vite as an example:
 
 ```ts
 // vite.config.ts
@@ -33,7 +33,7 @@ export default defineConfig({
 })
 ```
 
-引用数据：
+Reference data:
 
 ```Vue
 <script setup lang="ts">
