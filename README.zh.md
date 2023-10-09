@@ -1,10 +1,10 @@
 # unplugin-blog-manager
 
-<p align="center">English | <a href="./README.zh.md">简体中文</a></p>
+<p align="center"><a href="./README.md">English</a> | 简体中文</p>
 
-A plugin that helps you manage and organize blog posts, based on [unplugin](https://github.com/unjs/unplugin). It will index and classify your blog posts according to the *front matter* information in your blog posts, and provide an easy-to-render and use data object.
+一个可以帮助你管理和组织博客文章的插件，基于 [unplugin](https://github.com/unjs/unplugin)。它会根据你的博客文章中的 *front matter* 信息对其进行索引和分类，并对外提供一个易于渲染和使用的数据对象。
 
-Just these, it seems that a plugin is not needed to complete. Indeed, I mainly want to learn how to develop an unplugin plugin, so there is *unplugin-blog-manager*😊.
+仅仅这些，似乎并不需要一个插件来完成。的确如此，我主要是想学习如何开发一个 unplugin 插件，所以就有了 *unplugin-blog-manager*😊。
 
 ## 安装
 
