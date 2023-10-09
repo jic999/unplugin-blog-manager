@@ -42,7 +42,7 @@ export const unpluginFactory: UnpluginFactory<Options> = (options) => {
 
       // - path
       const path = articleFile
-        .substring(articleFile.lastIndexOf(targetDirname))
+        .substring(articleFile.lastIndexOf(targetDirname) - 1)
         .replaceAll('\\', '/')
         .replace(/\.md$/, '')
       // - readingTime
